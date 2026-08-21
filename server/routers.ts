@@ -5,7 +5,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { notifyOwner } from "./_core/notification";
 import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
-import { createClaim, createLead, createReview, getAttorneyBySlug, getOwnerLeads, getReviewAggregate, getReviews, listAttorneys } from "./db";
+import { createClaim, createLead, createReview, getAttorneyBySlug, getOwnerLeads, getReviewAggregate, getReviews, listAttorneys, updateAttorneyProfile, updateLeadResponse } from "./db";
 import { sendOwnerAlert } from "./email";
 
 const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
@@ -52,6 +52,8 @@ export const appRouter = router({
   }),
   owner: router({
     leads: protectedProcedure.query(({ ctx }) => getOwnerLeads(ctx.user.id)),
+    respondToLead: protectedProcedure.input(z.object({ leadId: z.number(), response: z.string().min(10) })).mutation(({ ctx, input }) => updateLeadResponse(input.leadId, ctx.user.id, input.response)),
+    updateProfile: protectedProcedure.input(z.object({ attorneyId: z.number(), phone: z.string().optional(), website: z.string().optional(), officeHours: z.string().optional(), photoUrl: z.string().url().optional() })).mutation(({ ctx, input }) => updateAttorneyProfile(input.attorneyId, ctx.user.id, input)),
     startSubscription: protectedProcedure.mutation(async ({ ctx }) => {
       if (!stripe) return { url: null, error: "Stripe is not configured yet." };
       const origin = ctx.req.headers.origin ?? "http://localhost:3000";

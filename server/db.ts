@@ -74,3 +74,17 @@ export async function getOwnerLeads(userId: number) {
   const db = await getDb(); if (!db) return [];
   return db.select({ lead: leads, attorney: attorneys }).from(leads).innerJoin(attorneys, eq(leads.attorneyId, attorneys.id)).where(eq(attorneys.claimedByUserId, userId)).orderBy(desc(leads.createdAt));
 }
+
+export async function updateLeadResponse(leadId: number, userId: number, response: string) {
+  const db = await getDb(); if (!db) return false;
+  const owned = await db.select({ lead: leads }).from(leads).innerJoin(attorneys, eq(leads.attorneyId, attorneys.id)).where(and(eq(leads.id, leadId), eq(attorneys.claimedByUserId, userId))).limit(1);
+  if (!owned.length) return false;
+  await db.update(leads).set({ response, status: "responded" }).where(eq(leads.id, leadId));
+  return true;
+}
+
+export async function updateAttorneyProfile(attorneyId: number, userId: number, changes: { phone?: string; website?: string; officeHours?: string; photoUrl?: string }) {
+  const db = await getDb(); if (!db) return false;
+  await db.update(attorneys).set(changes).where(and(eq(attorneys.id, attorneyId), eq(attorneys.claimedByUserId, userId)));
+  return true;
+}

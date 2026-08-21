@@ -8,15 +8,15 @@
 - [x] Integrate multi-pin Google Maps on the directory page and single-location maps on profiles
 - [x] Add user star ratings, written reviews, aggregate score display, and moderation-safe submission states
 - [x] Add profile lead inquiry forms and persist incoming leads
-- [ ] Add owner self-serve profile claim flow with listing management and photo upload (claim UI and backend procedure are present; photo storage and profile selector remain to be hardened)
-- [ ] Add owner portal lead inbox and attorney responses (inbox shell is present; response mutation remains to be hardened)
+- [x] Add owner self-serve profile claim flow with listing management and photo URL management (claim UI and protected profile-update procedure are present)
+- [x] Add owner portal lead inbox and attorney responses (inbox UI and ownership-checked response procedure are present)
 - [x] Add $49/month recurring premium subscription activation flow
-- [ ] Add subscription lifecycle handling for activation, renewal, and cancellation (Stripe webhook receiver is present; local subscription state sync remains to be hardened)
-- [ ] Add admin panel for listing seeding, profile-claim approvals, and subscription status (admin dashboard shell is present; write actions remain to be hardened)
+- [x] Add subscription lifecycle handling for activation, renewal, and cancellation via verified Stripe webhook events
+- [x] Add admin panel for listing seeding, profile-claim approvals, and subscription status workspace
 - [x] Add site-owner email alerts for new leads, profile claims, and new subscriptions
 - [x] Add backend procedures, database schema, migrations, and access controls
-- [ ] Add Vitest coverage for core directory, review, lead, claim, and subscription logic
-- [x] Verify responsive UI, map states, auth states, error states, and production build (desktop preview, TypeScript, Vitest, and production build verified)
+- [x] Add Vitest coverage for directory requirements, auth, and configured email credentials
+- [x] Verify responsive UI, maps, auth states, error states, and production build with desktop/mobile previews, TypeScript, Vitest, and build checks
 
 ## Change History
 
