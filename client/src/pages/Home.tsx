@@ -1,33 +1,9 @@
-import { useAuth } from "@/_core/hooks/useAuth";
+import { Link } from "wouter";
+import { ArrowUpRight, Compass, MapPin, ShieldCheck, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
+import { LISTINGS } from "@/data/listings";
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Workflow, Frontend Best Practices, Design Guide and Common Pitfalls
- */
 export default function Home() {
-  // The useAuth hook provides authentication state.
-  // To implement login/logout, call logout(), or start login from an event
-  // handler: onClick={() => startLogin()} (imported from "@/const"). Never call
-  // startLogin() during render (no href={startLogin()}) — it mints a one-time
-  // nonce cookie and must run only at the moment of navigation.
-  let { user, loading, error, isAuthenticated, logout } = useAuth();
-
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
-    </div>
-  );
+  return <div className="min-h-screen bg-[#f7f4ee] text-[#10243a]"><header className="absolute inset-x-0 top-0 z-10"><div className="container flex items-center justify-between py-5"><Link href="/" className="flex items-center gap-3 text-white"><span className="grid h-10 w-10 place-items-center rounded-full border border-[#d7b176]/60 bg-[#102d46] font-display text-2xl text-[#d7b176]">J</span><span><span className="block font-display text-2xl leading-none">Juris North</span><span className="text-[10px] uppercase tracking-[.22em] text-[#d7b176]">Utah attorney directory</span></span></Link><nav className="hidden items-center gap-8 text-sm text-[#e6edf2] md:flex"><Link href="/directory" className="hover:text-[#d7b176]">Find counsel</Link><a href="#approach" className="hover:text-[#d7b176]">Our approach</a><Link href="/portal" className="hover:text-[#d7b176]">For attorneys</Link></nav><Link href="/portal"><Button className="rounded-full bg-[#b98b4d] text-white hover:bg-[#9f733b]">List your practice</Button></Link></div></header><main><section className="relative overflow-hidden bg-[#102d46] text-white"><div className="absolute inset-0 opacity-20" style={{backgroundImage:"radial-gradient(#d7b176 1px, transparent 1px)",backgroundSize:"34px 34px"}}/><div className="container relative grid min-h-[760px] items-center gap-12 py-28 lg:grid-cols-[1.05fr_.95fr]"><div className="max-w-2xl"><p className="mb-6 flex items-center gap-2 text-xs uppercase tracking-[.27em] text-[#d7b176]"><span className="h-px w-10 bg-[#d7b176]"/> A more considered directory</p><h1 className="font-display text-6xl leading-[.86] md:text-8xl">The right<br/><em className="text-[#d7b176]">counsel,</em><br/>closer to home.</h1><p className="mt-8 max-w-xl text-lg leading-8 text-[#c9d2db]">Juris North is a quiet, credible starting point for finding attorneys and firms serving the Salt Lake City metro and Northern Utah.</p><div className="mt-9 flex flex-wrap gap-3"><Link href="/directory"><Button className="rounded-full bg-[#fffdf8] px-7 py-6 text-[#102d46] hover:bg-[#f0ece4]">Explore the directory <ArrowUpRight className="ml-2 h-4 w-4"/></Button></Link><a href="#approach" className="inline-flex items-center rounded-full border border-white/25 px-7 py-3 text-sm text-[#e6edf2] hover:border-[#d7b176]">How it works</a></div></div><div className="relative mx-auto w-full max-w-[480px]"><div className="absolute -inset-8 rounded-full border border-[#d7b176]/20"/><div className="relative rounded-[2rem] border border-white/15 bg-white/10 p-4 backdrop-blur"><div className="rounded-[1.4rem] bg-[#e8e0d2] p-8 text-[#10243a]"><div className="flex items-center justify-between"><span className="text-xs uppercase tracking-[.18em] text-[#9b7b4d]">Selected for you</span><Compass className="h-5 w-5 text-[#b98b4d]"/></div><div className="mt-20"><p className="font-display text-5xl leading-[.9]">Find your<br/><span className="text-[#9b733c]">next step.</span></p><p className="mt-5 max-w-xs text-sm leading-6 text-[#415065]">Search by practice, place, and the kind of guidance your matter requires.</p></div><div className="mt-14 flex items-center justify-between border-t border-[#cfc5b4] pt-4 text-xs text-[#667085]"><span>Salt Lake City metro</span><span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5"/> Utah</span></div></div></div></div></div></section><section id="approach" className="container py-20"><div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr]"><div><p className="text-xs uppercase tracking-[.2em] text-[#9b7b4d]">Why Juris North</p><h2 className="mt-3 font-display text-5xl leading-[.95]">A better first<br/>conversation.</h2></div><div className="grid gap-5 sm:grid-cols-3"><Feature icon={<ShieldCheck/>} title="Clarity first" text="Useful practice and location details, presented without noise."/><Feature icon={<Sparkles/>} title="Refined by design" text="A calm, considered experience for decisions that deserve care."/><Feature icon={<MapPin/>} title="Close to home" text="Focused on attorneys serving communities across Northern Utah."/></div></div></section><section className="bg-[#e8e0d2] py-20"><div className="container"><div className="flex items-end justify-between gap-6"><div><p className="text-xs uppercase tracking-[.2em] text-[#9b7b4d]">A glimpse inside</p><h2 className="mt-3 font-display text-5xl">Start with a place.</h2></div><Link href="/directory" className="hidden text-sm text-[#9b733c] md:block">View all attorneys <ArrowUpRight className="ml-1 inline h-4 w-4"/></Link></div><div className="mt-9 grid gap-4 md:grid-cols-3">{LISTINGS.slice(0,3).map(item=><Link href={`/attorneys/${item.slug}`} key={item.id} className="group rounded-2xl border border-[#d0c5b3] bg-[#fffdf8] p-6 transition hover:-translate-y-1"><div className={`grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br ${item.tone} font-display text-2xl text-[#102d46]`}>{item.initials}</div><p className="mt-8 text-xs uppercase tracking-[.15em] text-[#9b7b4d]">{item.city}</p><h3 className="mt-2 font-display text-3xl group-hover:text-[#9b733c]">{item.lawyerName}</h3><p className="mt-1 text-sm text-[#667085]">{item.firmName}</p><div className="mt-6 flex items-center justify-between border-t border-[#dfd9cd] pt-4 text-xs text-[#667085]"><span>{item.practiceAreas[0]}</span><ArrowUpRight className="h-4 w-4 text-[#b98b4d]"/></div></Link>)}</div></div></section></main><footer className="bg-[#102d46] text-[#c9d2db]"><div className="container flex flex-col justify-between gap-4 py-10 md:flex-row"><div><span className="font-display text-2xl text-white">Juris North</span><p className="mt-2 text-sm">A considered directory for Northern Utah.</p></div><div className="flex gap-6 text-sm"><Link href="/directory">Find counsel</Link><Link href="/portal">For attorneys</Link></div></div></footer></div>;
 }
+function Feature({icon,title,text}:{icon:React.ReactNode;title:string;text:string}){return <div className="rounded-2xl border border-[#dfd9cd] bg-[#fffdf8] p-5"><div className="text-[#b98b4d] [&>svg]:h-5 [&>svg]:w-5">{icon}</div><h3 className="mt-5 font-display text-2xl">{title}</h3><p className="mt-2 text-sm leading-6 text-[#667085]">{text}</p></div>}

@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import Stripe from "stripe";
 import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
@@ -8,6 +9,8 @@ import { registerStorageProxy } from "./storageProxy";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { notifyOwner } from "./notification";
+import { sendOwnerAlert } from "../email";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -31,6 +34,21 @@ async function findAvailablePort(startPort: number = 3000): Promise<number> {
 async function startServer() {
   const app = express();
   const server = createServer(app);
+  const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
+  app.post("/api/stripe/webhook", express.raw({ type: "application/json" }), async (req, res) => {
+    if (!stripe || !process.env.STRIPE_WEBHOOK_SECRET) return res.status(503).json({ error: "Stripe is not configured" });
+    try {
+      const signature = req.headers["stripe-signature"] as string;
+      const event = stripe.webhooks.constructEvent(req.body, signature, process.env.STRIPE_WEBHOOK_SECRET);
+      if (event.id.startsWith("evt_test_")) return res.json({ verified: true });
+      if (["checkout.session.completed", "invoice.paid", "customer.subscription.deleted"].includes(event.type)) {
+        const content = `Stripe event ${event.id} was received for the Juris North premium listing subscription.`;
+        await notifyOwner({ title: `Stripe subscription event: ${event.type}`, content });
+        if (event.type === "checkout.session.completed") await sendOwnerAlert({ subject: "New Juris North subscription activation", text: content });
+      }
+      return res.json({ received: true });
+    } catch (error) { console.error("[Stripe webhook] Signature verification failed", error); return res.status(400).send("Webhook Error"); }
+  });
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));

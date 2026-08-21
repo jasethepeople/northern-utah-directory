@@ -43,8 +43,8 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
+  --primary: #102d46;
+  --primary-foreground: #fffdf8;
   --sidebar-primary: var(--color-blue-600);
   --sidebar-primary-foreground: var(--color-blue-50);
   --chart-1: var(--color-blue-300);
@@ -53,18 +53,18 @@
   --chart-4: var(--color-blue-700);
   --chart-5: var(--color-blue-800);
   --radius: 0.65rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.235 0.015 65);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.015 65);
+  --background: #f7f4ee;
+  --foreground: #10243a;
+  --card: #fffdf8;
+  --card-foreground: #10243a;
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.235 0.015 65);
   --secondary: oklch(0.98 0.001 286.375);
   --secondary-foreground: oklch(0.4 0.015 65);
   --muted: oklch(0.967 0.001 286.375);
   --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.141 0.005 285.823);
+  --accent: #b98b4d;
+  --accent-foreground: #fffdf8;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.92 0.004 286.32);
@@ -79,8 +79,8 @@
 }
 
 .dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
+  --primary: #102d46;
+  --primary-foreground: #fffdf8;
   --sidebar-primary: var(--color-blue-500);
   --sidebar-primary-foreground: var(--color-blue-50);
   --background: oklch(0.141 0.005 285.823);
@@ -134,6 +134,9 @@
 }
 
 @layer components {
+  .font-display { font-family: "Cormorant Garamond", Georgia, serif; }
+  .legal-shadow { box-shadow: 0 22px 55px rgba(16, 36, 58, .10); }
+
   /**
    * Custom container utility that centers content and adds responsive padding.
    *
